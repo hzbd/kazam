@@ -28,7 +28,6 @@ logger = logging.getLogger("Grabber")
 from gi.repository import GObject, Gtk, Gdk, GdkPixbuf, GdkX11
 
 from kazam.backend.prefs import *
-from kazam.backend.constants import *
 from kazam.frontend.save_dialog import SaveDialog
 from gettext import gettext as _
 

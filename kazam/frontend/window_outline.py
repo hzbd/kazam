@@ -25,7 +25,7 @@ logger = logging.getLogger("Outline Window")
 
 from gi.repository import Gtk, GObject, Gdk, Wnck, GdkX11
 
-from kazam.backend.constants import *
+from kazam.backend.prefs import *
 
 
 class OutlineWindow(GObject.GObject):

@@ -61,7 +61,7 @@
                     <property name="can_focus">False</property>
                     <property name="halign">end</property>
                     <property name="xalign">1</property>
-                    <property name="label" translatable="yes">Microphone:</property>
+                    <property name="label" translatable="yes">Speakers:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>
@@ -76,7 +76,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">end</property>
-                    <property name="label" translatable="yes">Speakers:</property>
+                    <property name="label" translatable="yes">Microphone:</property>
                     <property name="justify">right</property>
                   </object>
                   <packing>

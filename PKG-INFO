@@ -1,13 +1,13 @@
 Metadata-Version: 1.1
 Name: kazam
-Version: 1.4.3-0ubuntu1
+Version: 1.4.4
 Summary: A screencasting program created with design in mind.
 Home-page: https://launchpad.net/kazam
 Author: David Klasinc
 Author-email: bigwhale@lubica.net
 License: GPLv3
 Description: 
-                   Kazam v1.4.3 "NCC-2000"
+                   Kazam v1.4.4 "NCC-80102"
         
         
         Introduction
@@ -26,14 +26,14 @@ Description:
         
         Kazam is always available from Launchpad under https://launchpad.net/kazam
         
-        Latest stable release is 1.4.3.
+        Latest stable release is 1.4.4.
         Latest unstable release is 1.3.99
         
         
         Installation - stable release
         -----------------------------
         
-        If you are using Ubuntu 12.04 or 12.10 then stable version (1.0.x)
+        If you are using Ubuntu 14.04 or 13.10 then stable version (1.0.x)
         is available from universe repository. You can find it in Ubuntu Softare
         Center or install it from the terminal with the following command:
         
@@ -49,12 +49,12 @@ Description:
         For distribution independent installation you will have to get the latest
         tarball release from Launchpad:
         
-        http://launchpad.net/kazam/stable/1.4.3/+download/kazam_1.4.3.tar.gz
+        http://launchpad.net/kazam/stable/1.4.4/+download/kazam_1.4.4.tar.gz
         
         Unpack it and then run setup:
         
-           $ tar -xzf kazam_1.4.3.tar.gz
-           $ cd kazam-1.4.3
+           $ tar -xzf kazam_1.4.4.tar.gz
+           $ cd kazam-1.4.4
         
         Run installation as root user, or use sudo:
         
@@ -122,11 +122,33 @@ Description:
         repositories and there is no need to use PPA to get keybinder installed.
         
         
+        Recording Tips
+        --------------
+        
+        Framerates above 20fps are unlikely to work well because of software and
+        hardware limitations. If you increase framerate and framerate in
+        resulting video drops, that is because encoder can't keep up.
+        
+        Always do a sound check. Especially if you are recording a live commentary
+        with background sound. I got the best results when I used earphones to listen
+        to the audio while recording. This way your mic will not pick up any audio
+        coming from speakers.
+        
+        If you _really_ want loss-less quality, then you will have to record in RAW
+        format. This is possible, but without an SSD with a lot of free space your
+        results will be terrible. 1920x1080 at 15 frames per second will need
+        around 45 MB of disk space per second. Most people will want to record at
+        20 or 25 frames per second. Most disk will not handle that and your
+        system will start to crawl.
+        
+        Your next best bet is HUFFYUV format, which is a little bit friendlier on
+        disk bandwidth with 28 MB per second at 15 frames per second. The problem?
+        Not many video editors and players can handle HUFFYUV, let alone video
+        sharing services.
+        
+        
         Known Issues
         ------------
-        
-        - Support for multiple monitors is there, but your mileage may vary. It
-        was tested only on two screen setup where both screens are side by side.
         
         - Trouble with recording audio from certain Monitor sources. I noticed
         this with Logitech G110 USB Keyboard that can play audio. Pulse
@@ -150,21 +172,9 @@ Description:
         windows. Area selection and countdown timers will be affected by this.
         Mint users can turn on window compositing in Desktop Settings.
         
-        - When taking a screenshot of a preselected window with window decoration
+        - When taking a screenshot of a preselected window with window decorations
         you have to make sure that your window is not covered by other windows.
         
-        
-        Recording Tips
-        --------------
-        
-        Framerates above 20fps are unlikely to work well because of software and
-        hardware limitations. If you increase framerate and framerate in
-        resulting video drops, that is because encoder can't keep up.
-        
-        Always do a sound check. Especially if you are recording a live commentary
-        with background sound. I got the best results when I used earphones to listen
-        to the audio while recording. This way your mic will not pick up any audio
-        coming from speakers.
         
         
         Debugging & reporting problems

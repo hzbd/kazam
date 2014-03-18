@@ -33,7 +33,6 @@ from gettext import gettext as _
 
 from kazam.utils import *
 from kazam.backend.prefs import *
-from kazam.backend.constants import *
 from kazam.backend.grabber import Grabber
 from kazam.frontend.main_menu import MainMenu
 from kazam.frontend.window_area import AreaWindow

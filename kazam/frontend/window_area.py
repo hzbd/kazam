@@ -29,7 +29,7 @@ from gettext import gettext as _
 
 from gi.repository import Gtk, GObject, Gdk, Wnck, GdkX11
 
-from kazam.backend.constants import *
+from kazam.backend.prefs import *
 from kazam.utils import in_circle
 
 
@@ -382,7 +382,7 @@ class AreaWindow(GObject.GObject):
         self._outline_text(cr, w, h, 30, _("Select an area by clicking and dragging."))
         self._outline_text(cr, w, h + 50, 26, _("Press ENTER to confirm or ESC to cancel"))
 
-        self._outline_text(cr, w, h + 100, 20, "({0} x {1})".format(abs(self.width+1), abs(self.height+1)))
+        self._outline_text(cr, w, h + 100, 20, "({0} × {1})".format(abs(self.width+1), abs(self.height+1)))
         cr.set_operator(cairo.OPERATOR_SOURCE)
 
     def _outline_text(self, cr, w, h, size, text):

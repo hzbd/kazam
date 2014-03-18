@@ -27,7 +27,6 @@ from gettext import gettext as _
 from gi.repository import Gtk, GObject, GLib
 
 from kazam.backend.prefs import *
-from kazam.backend.constants import *
 
 class CountdownWindow(GObject.GObject):
 

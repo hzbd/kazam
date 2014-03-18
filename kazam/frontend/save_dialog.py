@@ -28,7 +28,6 @@ from gi.repository import Gtk
 from gettext import gettext as _
 from datetime import datetime
 from kazam.backend.prefs import *
-from kazam.backend.constants import *
 
 def SaveDialog(title, old_path, codec, main_mode=MODE_SCREENCAST):
     logger.debug("Save dialog called with path: {0}".format(old_path))

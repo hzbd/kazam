@@ -31,8 +31,9 @@ David Klasinc <bigwhale@lubica.net>
 
 ARTISTS = """
 Matthew Paul Thomas <mpt@canonical.com>
-Georgi Karavasilev <motorslav@gmail.com>
+Georgi Karavasilev <kokoto-java@ubuntu.com>
 Frank Souza <franksouza183@gmail.com>
+Sam Hewitt <snwh@ubuntu.com>
 Robert McKenna <ttk1opc@yahoo.com>
 Andrew Higginson <rugby471@gmail.com>
 """
@@ -68,6 +69,9 @@ def AboutDialog(icons):
     except:
         # Not important, we just don't get to show our lovely logo.. :)
         pass
+    # dialog.set_modal(True)
+    # dialog.set_transient_for(kazam)
+    # dialog.set_decorated(False) 
     dialog.show_all()
     dialog.set_position(Gtk.WindowPosition.CENTER)
     dialog.run()

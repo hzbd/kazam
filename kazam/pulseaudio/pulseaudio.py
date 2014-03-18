@@ -24,7 +24,7 @@ import logging
 logger = logging.getLogger("PulseAudio")
 
 from kazam.pulseaudio.error_handling import *
-from kazam.backend.constants import *
+from kazam.backend.prefs import *
 
 try:
     from kazam.pulseaudio.ctypes_pulseaudio import *

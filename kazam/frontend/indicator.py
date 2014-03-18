@@ -26,7 +26,7 @@ logger = logging.getLogger("Indicator")
 from gettext import gettext as _
 from gi.repository import Gtk, GObject, GLib
 
-from kazam.backend.constants import *
+from kazam.backend.prefs import *
 
 class KazamSuperIndicator(GObject.GObject):
     __gsignals__ = {
@@ -291,3 +291,9 @@ except ImportError:
         def start_recording(self):
             logger.debug("Recording started.")
             self.indicator.set_from_icon_name("kazam-recording")
+
+        def hide_it(self):
+            self.indicator.set_visible(False)
+
+        def show_it(self):
+            self.indicator.set_visible(True)

@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-04-16 04:57+0000\n"
-"X-Generator: Launchpad (build 16564)\n"
+"X-Launchpad-Export-Date: 2013-05-17 05:38+0000\n"
+"X-Generator: Launchpad (build 16626)\n"
 
 #: ../data/ui/kazam.ui.h:1 ../data/kazam.desktop.in.h:1
 #: ../kazam/frontend/about_dialog.py:57
@@ -24,7 +24,7 @@ msgstr ""
 
 #: ../data/ui/kazam.ui.h:2
 msgid "Capture"
-msgstr ""
+msgstr "Opnemen"
 
 #: ../data/ui/kazam.ui.h:3
 msgid "Seconds to wait before capturing:"
@@ -40,12 +40,12 @@ msgstr ""
 
 #: ../data/ui/kazam.ui.h:6
 msgid "Mouse cursor"
-msgstr ""
+msgstr "Muis cursor"
 
 #: ../data/ui/kazam.ui.h:7 ../data/ui/preferences.ui.h:16 ../kazam/app.py:163
 #: ../kazam/frontend/save_dialog.py:43
 msgid "Screencast"
-msgstr ""
+msgstr "Schermopname"
 
 #: ../data/ui/kazam.ui.h:8
 msgid "Window borders"
@@ -54,7 +54,7 @@ msgstr ""
 #: ../data/ui/kazam.ui.h:9 ../data/ui/preferences.ui.h:19 ../kazam/app.py:175
 #: ../kazam/frontend/save_dialog.py:45
 msgid "Screenshot"
-msgstr ""
+msgstr "Schermafdruk"
 
 #: ../data/ui/kazam.ui.h:10
 msgid "When capturing include:"
@@ -62,7 +62,7 @@ msgstr ""
 
 #: ../data/ui/preferences.ui.h:1
 msgid "Kazam Preferences"
-msgstr ""
+msgstr "Kazam Voorkeuren"
 
 #: ../data/ui/preferences.ui.h:2
 msgid "Speakers:"
@@ -86,7 +86,7 @@ msgstr "Weergave van aftelanimatie in-/uitschakelen"
 
 #: ../data/ui/preferences.ui.h:7
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: ../data/ui/preferences.ui.h:8
 msgid "Framerate:"
@@ -102,11 +102,11 @@ msgstr "Opnemen met:"
 
 #: ../data/ui/preferences.ui.h:11
 msgid "Automatic file saving:"
-msgstr ""
+msgstr "Bestand automatisch opslaan"
 
 #: ../data/ui/preferences.ui.h:12
 msgid "Directory:"
-msgstr ""
+msgstr "Map:"
 
 #: ../data/ui/preferences.ui.h:13
 msgid "Filename prefix:"
@@ -114,7 +114,7 @@ msgstr ""
 
 #: ../data/ui/preferences.ui.h:14
 msgid "Select a directory"
-msgstr ""
+msgstr "Selecteer een map"
 
 #: ../data/ui/preferences.ui.h:15
 msgid "Kazam_screencast"
@@ -154,7 +154,7 @@ msgstr ""
 
 #: ../data/kazam.desktop.in.h:8 ../kazam/frontend/main_menu.py:65
 msgid "Preferences"
-msgstr ""
+msgstr "Voorkeuren"
 
 #: ../kazam/app.py:57 ../kazam/app.py:66
 msgid "Gstreamer 1.0 or higher required, bailing out."
@@ -166,11 +166,11 @@ msgstr ""
 
 #: ../kazam/app.py:176
 msgid "Record a picture of your desktop."
-msgstr ""
+msgstr "Maak een foto van je bureaublad"
 
 #: ../kazam/app.py:199
 msgid "Fullscreen"
-msgstr ""
+msgstr "Volledig Scherm"
 
 #: ../kazam/app.py:200
 msgid "Capture contents of the current screen."
@@ -186,7 +186,7 @@ msgstr ""
 
 #: ../kazam/app.py:224
 msgid "Window"
-msgstr ""
+msgstr "Venster"
 
 #: ../kazam/app.py:225
 msgid "Capture contents of a single window."
@@ -206,7 +206,7 @@ msgstr "Opname starten"
 
 #: ../kazam/app.py:309
 msgid "Take screenshot"
-msgstr ""
+msgstr "Schermafdruk maken"
 
 #: ../kazam/app.py:558 ../kazam/app.py:573 ../kazam/frontend/indicator.py:76
 msgid "Finish recording"

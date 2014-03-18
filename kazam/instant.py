@@ -27,7 +27,6 @@ from gi.repository import Gtk, GObject
 
 from kazam.utils import *
 from kazam.backend.prefs import *
-from kazam.backend.constants import *
 from kazam.backend.grabber import Grabber
 
 logger = logging.getLogger("Instant")

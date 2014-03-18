@@ -28,8 +28,6 @@ from gi.repository import Gtk, Gdk, GObject, Pango
 
 from kazam.utils import *
 from kazam.backend.prefs import *
-from kazam.backend.constants import *
-from kazam.utils import detect_codecs, get_codec
 
 class Preferences(GObject.GObject):
     __gsignals__ = {
@@ -288,7 +286,7 @@ class Preferences(GObject.GObject):
         logger.debug("Volume 2 changed, new value: {0}".format(value))
         idx = self.combobox_audio2.get_active()
         pa_idx =  prefs.audio_sources[idx][0]
-        chn = self.audio_source_info[2].channels
+        chn = self.audio2_source_info[2].channels
         cvol = prefs.pa_q.dB_to_cvolume(chn, value-60)
         prefs.pa_q.set_source_volume_by_index(pa_idx, cvol)
 
