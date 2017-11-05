@@ -273,9 +273,9 @@ class KazamApp(GObject.GObject):
         if prefs.sound:
             prefs.get_audio_sources()
 
-        if not prefs.silent:
-            self.window.show_all()
-        else:
+        #if not prefs.silent:
+        #    self.window.show_all()
+        #else:
             logger.info("""Starting in silent mode:\n"""
                         """  SUPER-CTRL-W to toggle main window.\n"""
                         """  SUPER-CTRL-R to start recording.\n"""
@@ -535,6 +535,7 @@ class KazamApp(GObject.GObject):
             self.window.hide()
 
     def cb_close_clicked(self, indicator):
+        logger.debug('cb_close_clicked')
         (prefs.main_x, prefs.main_y) = self.window.get_position()
         self.window.hide()
 
@@ -542,7 +543,9 @@ class KazamApp(GObject.GObject):
         AboutDialog(self.icons)
 
     def cb_delete_event(self, widget, user_data):
-        self.cb_quit_request(None)
+        logger.debug(widget)
+        logger.debug('cb_delete_event')
+        #self.cb_quit_request(None)
 
     def cb_start_request(self, widget):
         logger.debug("Start recording selected.")
