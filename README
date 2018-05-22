@@ -89,7 +89,7 @@ that you have to take into account. Every icon has to be taken from
 currently installed icon theme. Toolbars will not show any icons and you
 will not see Unity AppIndicator.
 
-To run Kazam simply execute te following commands in the source tree:
+To run Kazam simply execute the following commands in the source tree:
 
 $ cd bin
 $ ./kazam
