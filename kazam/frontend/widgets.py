@@ -19,7 +19,7 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-from gi.repository import Gtk, Gdk, Pango, GObject, GdkPixbuf
+from gi.repository import Gtk
 
 class _Tile(object):
     def __init__(self):
@@ -40,11 +40,13 @@ class _Tile(object):
         self.label = Gtk.Label.new(label)
         self.box.pack_start(self.label, True, True, 0)
 
+
 class TileToggleButton(Gtk.RadioButton, _Tile):
     def __init__(self):
         Gtk.RadioButton.__init__(self)
         self.set_mode(False)
         _Tile.__init__(self)
+
 
 class ModeButton(TileToggleButton):
     def __init__(self, label, icon):
@@ -57,4 +59,3 @@ class ModeButton(TileToggleButton):
     #def do_draw(self, cr):
         #for child in self:
         #    self.propagate_draw(child, cr)
-

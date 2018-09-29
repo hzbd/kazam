@@ -28,33 +28,34 @@ from gi.repository import Gtk, GObject, GLib
 
 from kazam.backend.prefs import *
 
+
 class KazamSuperIndicator(GObject.GObject):
     __gsignals__ = {
-        "indicator-pause-request" : (GObject.SIGNAL_RUN_LAST,
-                                     None,
-                                     (), ),
-        "indicator-unpause-request" : (GObject.SIGNAL_RUN_LAST,
-                                       None,
-                                       (), ),
-        "indicator-quit-request" : (GObject.SIGNAL_RUN_LAST,
+        "indicator-pause-request": (GObject.SIGNAL_RUN_LAST,
                                     None,
                                     (), ),
-        "indicator-show-request" : (GObject.SIGNAL_RUN_LAST,
+        "indicator-unpause-request": (GObject.SIGNAL_RUN_LAST,
+                                      None,
+                                      (), ),
+        "indicator-quit-request": (GObject.SIGNAL_RUN_LAST,
+                                   None,
+                                   (), ),
+        "indicator-show-request": (GObject.SIGNAL_RUN_LAST,
+                                   None,
+                                   (), ),
+        "indicator-stop-request": (GObject.SIGNAL_RUN_LAST,
+                                   None,
+                                   (), ),
+        "indicator-start-request": (GObject.SIGNAL_RUN_LAST,
                                     None,
                                     (), ),
-        "indicator-stop-request" : (GObject.SIGNAL_RUN_LAST,
-                                    None,
-                                    (), ),
-        "indicator-start-request" : (GObject.SIGNAL_RUN_LAST,
-                                     None,
-                                     (), ),
 
-        "indicator-about-request" : (GObject.SIGNAL_RUN_LAST,
-                                     None,
-                                     (), ),
-        }
+        "indicator-about-request": (GObject.SIGNAL_RUN_LAST,
+                                    None,
+                                    (), ),
+    }
 
-    def __init__(self, silent = False):
+    def __init__(self, silent=False):
         super(KazamSuperIndicator, self).__init__()
         self.blink_icon = BLINK_STOP_ICON
         self.blink_state = False
@@ -64,12 +65,6 @@ class KazamSuperIndicator(GObject.GObject):
         logger.debug("Indicatior silent: {0}".format(self.silent))
 
         self.menu = Gtk.Menu()
-
-        self.menuitem_settings = Gtk.MenuItem(_("Settings"))
-        self.menuitem_settings.set_sensitive(True)
-        self.menuitem_settings.connect("activate", self.on_menuitem_settings_activate)
-
-        self.menuitem_separator1 = Gtk.SeparatorMenuItem()
 
         self.menuitem_start = Gtk.MenuItem(_("Start recording"))
         self.menuitem_start.set_sensitive(True)
@@ -83,17 +78,15 @@ class KazamSuperIndicator(GObject.GObject):
         self.menuitem_finish.set_sensitive(False)
         self.menuitem_finish.connect("activate", self.on_menuitem_finish_activate)
 
-        self.menuitem_separator2 = Gtk.SeparatorMenuItem()
+        self.menuitem_separator = Gtk.SeparatorMenuItem()
 
         self.menuitem_quit = Gtk.MenuItem(_("Quit"))
         self.menuitem_quit.connect("activate", self.on_menuitem_quit_activate)
 
-        self.menu.append(self.menuitem_settings)
-        self.menu.append(self.menuitem_separator1)
         self.menu.append(self.menuitem_start)
         self.menu.append(self.menuitem_pause)
         self.menu.append(self.menuitem_finish)
-        self.menu.append(self.menuitem_separator2)
+        self.menu.append(self.menuitem_separator)
         self.menu.append(self.menuitem_quit)
 
         self.menu.show_all()
@@ -140,10 +133,6 @@ class KazamSuperIndicator(GObject.GObject):
         self.recording = True
         self.emit("indicator-start-request")
 
-    def on_menuitem_settings_activate(self, menuitem):
-        logger.debug('on_menuitem_settings_activate')
-        self.emit('indicator-show-request')
-
     def on_menuitem_finish_activate(self, menuitem):
         self.recording = False
         self.menuitem_start.set_sensitive(True)
@@ -160,13 +149,14 @@ try:
     from gi.repository import AppIndicator3
 
     class KazamIndicator(KazamSuperIndicator):
-        def __init__(self, silent = False):
+
+        def __init__(self, silent=False):
             super(KazamIndicator, self).__init__(silent)
             self.silent = silent
 
             self.indicator = AppIndicator3.Indicator.new("kazam",
-                             "kazam-stopped",
-                             AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
+                                                         "kazam-stopped",
+                                                         AppIndicator3.IndicatorCategory.APPLICATION_STATUS)
 
             self.indicator.set_menu(self.menu)
             self.indicator.set_attention_icon("kazam-recording")
@@ -238,7 +228,7 @@ except ImportError:
     #
     class KazamIndicator(KazamSuperIndicator):
 
-        def __init__(self, silent = False):
+        def __init__(self, silent=False):
             super(KazamIndicator, self).__init__()
             self.silent = silent
 
