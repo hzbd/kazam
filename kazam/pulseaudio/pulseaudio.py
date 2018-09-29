@@ -93,7 +93,7 @@ class pulseaudio_q:
         except:
             raise PAError(PA_GET_STATE_ERROR, "Unable to read context state.")
 
-        return  0
+        return 0
 
     def pa_sourcelist_cb(self, context, source_info, eol, userdata):
         """Source list callback function
@@ -296,7 +296,7 @@ class pulseaudio_q:
     def set_source_mute_by_index(self, index, mute):
         try:
             pa_context_set_source_mute_by_index(self.pa_ctx, index, mute,
-                                                  self._pa_context_success_cb, None)
+                                                self._pa_context_success_cb, None)
             t = time.clock()
             while time.clock() - t < 5:
                 if self.pa_status == PA_FINISHED:
@@ -340,6 +340,3 @@ class pulseaudio_q:
         for i in range(0, channels):
             cvolume.values[i] = value
         return cvolume
-
-
-

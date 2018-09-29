@@ -1,5 +1,5 @@
 
-           Kazam v1.4.4 "NCC-80102"
+           Kazam v1.5.x "NX-72307"
 
 
 Introduction
@@ -19,15 +19,15 @@ Latest version
 Kazam is always available from Launchpad under https://launchpad.net/kazam
 
 Latest stable release is 1.4.4.
-Latest unstable release is 1.3.99
+Latest unstable release is 1.5.0
 
 
 Installation - stable release
 -----------------------------
 
-If you are using Ubuntu 14.04 or 13.10 then stable version (1.0.x)
-is available from universe repository. You can find it in Ubuntu Softare
-Center or install it from the terminal with the following command:
+If you are using Ubuntu 14.04 then stable version (1.4.4) is available from
+universe repository. You can find it in Ubuntu Softare Center or install it
+from the terminal with the following command:
 
 $ sudo apt-get install kazam
 
@@ -70,7 +70,7 @@ Installation - development version
 If you want bleeding edge, development version then you will have to get
 source code from Launchpad by running the following command:
 
-   $ bzr branch lp:kazam
+   $ bzr branch lp:kazam/unstable
 
 Then you need to run setup.py to build and install Kazam:
 
@@ -89,7 +89,7 @@ that you have to take into account. Every icon has to be taken from
 currently installed icon theme. Toolbars will not show any icons and you
 will not see Unity AppIndicator.
 
-To run Kazam simply execute the following commands in the source tree:
+To run Kazam simply execute te following commands in the source tree:
 
 $ cd bin
 $ ./kazam
@@ -142,6 +142,11 @@ sharing services.
 Known Issues
 ------------
 
+- New countdown timer will work correctly only if you have pycairo 1.10.1
+installed. Ubuntu 14.04 ships with 1.10.0. Unstable PPA for kazam currently
+provides the latest pycairo. This version of pycairo is untested and it might
+happen that other things will break if you install it.
+
 - Trouble with recording audio from certain Monitor sources. I noticed
 this with Logitech G110 USB Keyboard that can play audio. Pulse
 Audio will see two devices: USP PnP Stereo Device and 'Monitor of USB PnP
@@ -167,6 +172,19 @@ Mint users can turn on window compositing in Desktop Settings.
 - When taking a screenshot of a preselected window with window decorations
 you have to make sure that your window is not covered by other windows.
 
+- Mouse cursor is offseted by a number of pixels when capturing video of a
+pre-selected window. This is due to a GStreamer bug.
+See https://bugs.launchpad.net/kazam/+bug/1092339 and
+https://bugzilla.gnome.org/show_bug.cgi?id=690646 for more info.
+
+- Preliminary support for displaying keypresses and mouse clicks is done.
+It looks ugly and support is still clumsy it can also die and stop working.
+There are issues with dual screen setups.
+
+- Broadcast support is currenly in a very experimental stage. It will only
+work for YouTube Live. Support for Twitch is coming in the next updates.
+You will have to provide YouTube Live Stream and Server URL from custom made
+ingestion.
 
 
 Debugging & reporting problems

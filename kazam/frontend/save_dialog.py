@@ -24,9 +24,11 @@ import os
 import logging
 logger = logging.getLogger("Save Dialog")
 
-from gi.repository import Gtk
-from gettext import gettext as _
 from datetime import datetime
+from gettext import gettext as _
+
+from gi.repository import Gtk
+
 from kazam.backend.prefs import *
 
 def SaveDialog(title, old_path, codec, main_mode=MODE_SCREENCAST):
@@ -34,8 +36,7 @@ def SaveDialog(title, old_path, codec, main_mode=MODE_SCREENCAST):
     dialog = Gtk.FileChooserDialog(title, None,
                                    Gtk.FileChooserAction.SAVE,
                                    (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                                   _("Save"), Gtk.ResponseType.OK))
-
+                                    _("Save"), Gtk.ResponseType.OK))
 
     dt = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
     if main_mode == MODE_SCREENCAST:
@@ -46,19 +47,17 @@ def SaveDialog(title, old_path, codec, main_mode=MODE_SCREENCAST):
     dialog.set_do_overwrite_confirmation(True)
 
     if old_path and os.path.isdir(old_path):
-            dialog.set_current_folder(old_path)
-            logger.debug("Previous path is a valid destination")
+        dialog.set_current_folder(old_path)
+        logger.debug("Previous path is a valid destination")
     else:
-        if main_mode == MODE_SCREENCAST:
+        if main_mode in [MODE_SCREENCAST,  MODE_WEBCAM, MODE_BROADCAST]:
             dialog.set_current_folder(prefs.video_dest)
             logger.debug("Previous path invalid, setting it to: {0}".format(prefs.video_dest))
         elif main_mode == MODE_SCREENSHOT:
             dialog.set_current_folder(prefs.picture_dest)
             logger.debug("Previous path invalid, setting it to: {0}".format(prefs.picture_dest))
 
-
     dialog.show_all()
     result = dialog.run()
     old_path = dialog.get_current_folder()
     return dialog, result, old_path
-

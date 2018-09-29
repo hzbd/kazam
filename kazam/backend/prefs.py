@@ -27,10 +27,12 @@ from xdg.BaseDirectory import xdg_config_home
 
 from gi.repository import Gdk, GdkX11
 
+from kazam.backend.webcam import Webcam
 from kazam.backend.config import KazamConfig
 
 
 class Prefs():
+
     def __init__(self):
         """Initialize prefs and set all the preference variables to their
            default values.
@@ -47,11 +49,18 @@ class Prefs():
         self.logger = logging.getLogger("Prefs")
 
         #
-        # GUI preferences and stuff
+        # GUI preferences and stuff (should this be stored in a dict or something?)
         #
         self.capture_cursor = False
         self.capture_speakers = False
         self.capture_microphone = False
+
+        self.capture_speakers_webcam = False
+        self.capture_microphone_webcam = False
+
+        self.capture_cursor_broadcast = False
+        self.capture_speakers_broadcast = False
+        self.capture_microphone_broadcast = False
 
         self.capture_cursor_pic = False
         self.capture_borders_pic = False
@@ -66,6 +75,8 @@ class Prefs():
 
         self.countdown_splash = True
         self.silent_start = False
+
+        self.capture_keys = False
 
         #
         # Other stuff
@@ -107,6 +118,23 @@ class Prefs():
         self.mic_sources = []
 
         #
+        # Broadcast and webcam stuff
+        #
+        self.webcam_source = None
+        self.webcam_sources = {}
+        self.webcam_show_preview = True
+        self.webcam_preview_pos = 1
+        self.webcam_resolution = 0
+
+        self.yt_stream = ''
+        self.yt_server = ''
+
+        self.tw_stream = ''
+        self.tw_server = ''
+
+        self.broadcast_dst = ''
+
+        #
         # Command line parameters
         #
         self.debug = False
@@ -125,7 +153,6 @@ class Prefs():
         #
         # Fix codec list
         #
-
 
     def get_audio_sources(self):
         self.logger.debug("Getting Audio sources.")
@@ -146,6 +173,9 @@ class Prefs():
             # Something went wrong, just fallback to no-sound
             self.logger.warning("Unable to find any audio devices.")
             self.audio_sources = [[0, _("Unknown"), _("Unknown")]]
+
+    def get_webcam_sources(self):
+        self.webcam_sources = HW.webcam.device_list
 
     def get_dirs(self):
         paths = {}
@@ -198,10 +228,12 @@ class Prefs():
     def read_config(self):
         self.audio_source = int(self.config.get("main", "audio_source"))
         self.audio2_source = int(self.config.get("main", "audio2_source"))
+        self.webcam_source = int(self.config.get("main", "webcam_source"))
+
         self.main_x = int(self.config.get("main", "last_x"))
         self.main_y = int(self.config.get("main", "last_y"))
-        self.countdown_timer = float(self.config.get("main", "counter"))
 
+        self.countdown_timer = float(self.config.get("main", "counter"))
         #
         # Just in case this blows up in our face later
         #
@@ -210,8 +242,15 @@ class Prefs():
         self.framerate = float(self.config.get("main", "framerate"))
 
         self.capture_cursor = self.config.getboolean("main", "capture_cursor")
-        self.capture_microphone = self.config.getboolean("main", "capture_microphone")
         self.capture_speakers = self.config.getboolean("main", "capture_speakers")
+        self.capture_microphone = self.config.getboolean("main", "capture_microphone")
+
+        self.capture_speakers_webcam = self.config.getboolean("main", "capture_speakers_w")
+        self.capture_microphone_webcam = self.config.getboolean("main", "capture_microphone_w")
+
+        self.capture_cursor_broadcast = self.config.getboolean("main", "capture_cursor_b")
+        self.capture_speakers_broadcast = self.config.getboolean("main", "capture_speakers_b")
+        self.capture_microphone_broadcast = self.config.getboolean("main", "capture_microphone_b")
 
         self.capture_cursor_pic = self.config.getboolean("main", "capture_cursor_pic")
         self.capture_borders_pic = self.config.getboolean("main", "capture_borders_pic")
@@ -228,6 +267,21 @@ class Prefs():
 
         self.shutter_sound = self.config.getboolean("main", "shutter_sound")
         self.shutter_type = int(self.config.get("main", "shutter_type"))
+
+        self.webcam_show_preview = self.config.getboolean("main", "webcam_show_preview")
+        self.webcam_preview_pos = int(self.config.get("main", "webcam_preview_pos"))
+        self.webcam_resolution = int(self.config.get("main", "webcam_resolution"))
+
+        self.capture_keys = self.config.getboolean("main", "capture_keys")
+        self.capture_keys_broadcast = self.config.getboolean("main", "capture_keys_b")
+
+        self.yt_stream = self.config.get("main", "yt_stream")
+        self.yt_server = self.config.get("main", "yt_server")
+
+        self.tw_stream = self.config.get("main", "tw_stream")
+        self.tw_server = self.config.get("main", "tw_server")
+
+        self.broadcast_dst = int(self.config.get("main", "broadcast_dst"))
 
         self.first_run = self.config.getboolean("main", "first_run")
 
@@ -256,6 +310,15 @@ class Prefs():
         self.config.set("main", "capture_cursor", self.capture_cursor)
         self.config.set("main", "capture_speakers", self.capture_speakers)
         self.config.set("main", "capture_microphone", self.capture_microphone)
+        self.config.set("main", "capture_keys", self.capture_keys)
+        self.config.set("main", "capture_keys_b", self.capture_keys_broadcast)
+
+        self.config.set("main", "capture_speakers_w", self.capture_speakers_webcam)
+        self.config.set("main", "capture_microphone_w", self.capture_microphone_webcam)
+
+        self.config.set("main", "capture_cursor_b", self.capture_cursor_broadcast)
+        self.config.set("main", "capture_speakers_b", self.capture_speakers_broadcast)
+        self.config.set("main", "capture_microphone_b", self.capture_microphone_broadcast)
 
         self.config.set("main", "capture_cursor_pic", self.capture_cursor_pic)
         self.config.set("main", "capture_borders_pic", self.capture_borders_pic)
@@ -266,6 +329,8 @@ class Prefs():
         if self.sound:
             self.config.set("main", "audio_source", self.audio_source)
             self.config.set("main", "audio2_source", self.audio2_source)
+
+        self.config.set("main", "webcam_source", self.webcam_source)
 
         self.config.set("main", "countdown_splash", self.countdown_splash)
         self.config.set("main", "counter", self.countdown_timer)
@@ -280,7 +345,20 @@ class Prefs():
         self.config.set("main", "shutter_sound", self.shutter_sound)
         self.config.set("main", "shutter_type", self.shutter_type)
 
+        self.config.set("main", "webcam_show_preview", self.webcam_show_preview)
+        self.config.set("main", "webcam_preview_pos", self.webcam_preview_pos)
+        self.config.set("main", "webcam_resolution", self.webcam_resolution)
+
+        self.config.set("main", "yt_stream", self.yt_stream)
+        self.config.set("main", "yt_server", self.yt_server)
+
+        self.config.set("main", "tw_stream", self.tw_stream)
+        self.config.set("main", "tw_server", self.tw_server)
+
+        self.config.set("main", "broadcast_dst", self.broadcast_dst)
+
         self.config.write()
+
 
 class hw:
     def __init__(self):
@@ -289,9 +367,12 @@ class hw:
         self.screens = None
         self.combined_screen = None
 
-        self.get_screens()
+        self.webcam = Webcam()
 
-    def get_current_screen(self, window = None):
+        self.get_screens()
+        self.get_webcams()
+
+    def get_current_screen(self, window=None):
         try:
             if window:
                 screen = self.default_screen.get_monitor_at_window(window.get_window())
@@ -328,13 +409,16 @@ class hw:
                 self.combined_screen = {"x": 0, "y": 0,
                                         "width": self.default_screen.get_width(),
                                         "height": self.default_screen.get_height()}
-                self.logger.debug("  Combined screen - X: 0, Y: 0, W: {0}, H: {1}".format(self.default_screen.get_width(),
-                                                                                          self.default_screen.get_height()))
+                self.logger.debug("  Combined - X: 0, Y: 0, W: {0}, H: {1}".format(self.default_screen.get_width(),
+                                                                                   self.default_screen.get_height()))
             else:
                 self.combined_screen = None
 
         except:
             self.logger.warning("Unable to find any video sources.")
+
+    def get_webcams(self):
+        self.webcam.detect()
 
 
 def detect_codecs():
@@ -350,8 +434,8 @@ def detect_codecs():
         if codec[0]:
             try:
                 codec_test = Gst.ElementFactory.make(codec[1], "video_encoder")
-                logger.debug("Error loading {0} GStreamer plugin - support disabled.".format(codec))
             except:
+                logger.debug("Error loading {0} GStreamer plugin - support disabled.".format(codec[1]))
                 codec_test = None
 
             if codec_test:
@@ -437,6 +521,8 @@ BLINK_READY_ICON = 5
 # Main modes
 MODE_SCREENCAST = 0
 MODE_SCREENSHOT = 1
+MODE_BROADCAST = 2
+MODE_WEBCAM = 3
 
 # Record modes
 MODE_FULL = 0
@@ -457,6 +543,18 @@ HANDLE_BL = 6
 HANDLE_BC = 7
 HANDLE_BR = 8
 
+CAM_PREVIEW_TL = 0
+CAM_PREVIEW_TR = 1
+CAM_PREVIEW_BR = 2
+CAM_PREVIEW_BL = 3
+
+CAM_RESOLUTIONS = [
+    [320, 240],
+    [640, 480],
+    [800, 600],
+    [1024, 768]
+]
+
 # Area resize handle cursors
 HANDLE_CURSORS = (
     Gdk.CursorType.TOP_LEFT_CORNER,
@@ -470,7 +568,18 @@ HANDLE_CURSORS = (
     Gdk.CursorType.BOTTOM_RIGHT_CORNER
 )
 
+#
+# Keyboard modifiers
+#
+K_SHIFT = 0
+K_CTRL = 1
+K_SUPER = 2
+K_ALT = 3
 
+KEY_STRINGS = ["Shift",
+               "Control",
+               "Super",
+               "Alt", ]
 #
 # Singletons, because we also like singletons from time to time ... :)
 #

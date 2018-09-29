@@ -29,43 +29,56 @@ class KazamConfig(ConfigParser):
 
     DEFAULTS = [{
                 "name": "main",
-                "keys": {"video_toggled":        "True",
-                         "video_source":          "0",
-                         "audio_toggled":         "False",
-                         "audio_source":          "0",
-                         "audio_volume":          "0",
-                         "audio2_toggled":        "False",
-                         "audio2_source":         "0",
-                         "audio2_volume":         "0",
-                         "codec":                 "0",
-                         "counter":               "5",
-                         "capture_cursor":        "True",
-                         "capture_microphone":    "False",
-                         "capture_speakers":      "False",
-                         "capture_cursor_pic":    "True",
-                         "capture_borders_pic":   "True",
-                         "framerate":             "15",
-                         "countdown_splash":      "True",
-                         "last_x":                "60",
-                         "last_y":                "25",
-                         "advanced":              "0",
-                         "silent":                "0",
-                         "autosave_video":        "False",
+                "keys": {"video_toggled":          "True",
+                         "video_source":           "0",
+                         "audio_toggled":          "False",
+                         "audio_source":           "0",
+                         "audio_volume":           "0",
+                         "audio2_toggled":         "False",
+                         "audio2_source":          "0",
+                         "audio2_volume":          "0",
+                         "codec":                  "0",
+                         "counter":                "5",
+                         "capture_cursor":         "True",
+                         "capture_speakers":       "False",
+                         "capture_microphone":     "False",
+                         "capture_cursor_pic":     "True",
+                         "capture_borders_pic":    "True",
+                         "framerate":              "15",
+                         "countdown_splash":       "True",
+                         "last_x":                 "60",
+                         "last_y":                 "25",
+                         "advanced":               "0",
+                         "silent":                 "0",
+                         "autosave_video":         "False",
                          "autosave_video_dir":     "",
-                         "autosave_video_file":   "Kazam_screencast",
-                         "autosave_picture":      "False",
+                         "autosave_video_file":    "Kazam_screencast",
+                         "autosave_picture":       "False",
                          "autosave_picture_dir":   "",
                          "autosave_picture_file":  "Kazam_screenshot",
                          "shutter_sound":          "True",
                          "shutter_type":           "0",
                          "first_run":              "True",
+                         "webcam_source":          "0",
+                         "webcam_show_preview":    "True",
+                         "webcam_preview_pos":     "1",
+                         "webcam_resolution":      "0",
+                         "capture_speakers_w":     "False",
+                         "capture_microphone_w":   "False",
+                         "capture_cursor_b":       "False",
+                         "capture_speakers_b":     "False",
+                         "capture_microphone_b":   "False",
+                         "capture_keys":           "False",
+                         "capture_keys_b":         "False",
+                         "yt_stream":              "",
+                         "yt_server":              ""
                          },
                 },
                 {"name": "keyboard_shortcuts",
-                 "keys": {"pause":  "<Shift><Control>p",
-                          "finish": "<Shift><Control>f",
-                          "show":   "<Shift><Control>s",
-                          "quit":   "<Shift><Control>q",
+                 "keys": {"pause":  "<Shift><Super>p",
+                          "finish": "<Shift><Super>f",
+                          "show":   "<Shift><Super>s",
+                          "quit":   "<Shift><Super>q",
                           },
                  }]
 
@@ -73,7 +86,8 @@ class KazamConfig(ConfigParser):
     CONFIGFILE = os.path.join(CONFIGDIR, "kazam.conf")
 
     def __init__(self):
-        ConfigParser.__init__(self, self.DEFAULTS[0]['keys'])
+        ConfigParser.__init__(self)
+#         ConfigParser.__init__(self, self.DEFAULTS[0]['keys'])
         if not os.path.isdir(self.CONFIGDIR):
             os.makedirs(self.CONFIGDIR)
         if not os.path.isfile(self.CONFIGFILE):
@@ -98,15 +112,28 @@ class KazamConfig(ConfigParser):
                     if d_key == key:
                         return d_section["keys"][key]
 
-    def get(self, section, key):
+    def get(self, section, key, **kwargs):
         try:
-            return ConfigParser.get(self, section, key)
+            return super().get(section, key, **kwargs)
+#             ret = super(KazamConfig,self).get(section, key,raw=raw,fallback=fallback)
+#             if ret == "None":
+#                 default = self.find_default(section, key)
+#                 self.set(section, key, default)
+#                 self.write()
+#                 return default
+#             else:
+#                 return ret
         except NoSectionError:
             default = self.find_default(section, key)
             self.set(section, key, default)
             self.write()
             return default
         except NoOptionError:
+            default = self.find_default(section, key)
+            self.set(section, key, default)
+            self.write()
+            return default
+        except ValueError:
             default = self.find_default(section, key)
             self.set(section, key, default)
             self.write()
@@ -130,5 +157,3 @@ class KazamConfig(ConfigParser):
         file_ = open(self.CONFIGFILE, "w")
         ConfigParser.write(self, file_)
         file_.close()
-
-

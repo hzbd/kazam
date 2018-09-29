@@ -22,7 +22,7 @@
 
 import sys
 import logging
-from gettext import gettext as _
+
 from gi.repository import Gtk, GObject
 
 from kazam.utils import *
@@ -30,6 +30,7 @@ from kazam.backend.prefs import *
 from kazam.backend.grabber import Grabber
 
 logger = logging.getLogger("Instant")
+
 
 class InstantApp(GObject.GObject):
 
@@ -123,7 +124,7 @@ class InstantApp(GObject.GObject):
 
     def cb_window_selected(self, widget):
         xid = self.select_window.xid
-        xid_geometry = self.select_window.geometry
+        # xid_geometry = self.select_window.geometry
         logger.debug("Window selected: {0} - {1}".format(self.select_window.win_name, prefs.xid))
         logger.debug("Window geometry: {0}".format(self.select_window.geometry))
         self.grabber.setup_sources(self.video_source, None, xid)
@@ -149,8 +150,7 @@ class InstantApp(GObject.GObject):
             Gtk.main_quit()
             sys.exit(0)
 
-        self.take =+ 1
-
+        self.take += 1
 
     def cb_prefs_quit(self, widget):
         logger.debug("Saving settings.")
@@ -158,4 +158,3 @@ class InstantApp(GObject.GObject):
         prefs.save_config()
         Gtk.main_quit()
         sys.exit(0)
-
