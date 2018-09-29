@@ -37,20 +37,21 @@ MENUBAR = """
 </ui>
 """
 
+
 class MainMenu(GObject.GObject):
     __gsignals__ = {
-        "file-preferences" : (GObject.SIGNAL_RUN_LAST,
-                              None,
-                              (),
-                             ),
-        "file-quit" : (GObject.SIGNAL_RUN_LAST,
-                           None,
-                           (),
-                           ),
-        "help-about" : (GObject.SIGNAL_RUN_LAST,
+        "file-preferences": (GObject.SIGNAL_RUN_LAST,
                              None,
                              (),
                              ),
+        "file-quit": (GObject.SIGNAL_RUN_LAST,
+                      None,
+                      (),
+                      ),
+        "help-about": (GObject.SIGNAL_RUN_LAST,
+                       None,
+                       (),
+                       ),
     }
 
     def __init__(self):
@@ -58,21 +59,20 @@ class MainMenu(GObject.GObject):
 
         self.action_group = Gtk.ActionGroup("kazam_actions")
         self.action_group.add_actions([
-                ("FileMenu", None, _("File")),
-                ("FileQuit", Gtk.STOCK_QUIT, _("Quit"), None, _("Quit Kazam"),
-                               self.cb_file_quit),
-                ("FilePreferences", Gtk.STOCK_PREFERENCES, _("Preferences"), None, _("Open preferences"),
-                               self.cb_file_preferences),
-                ("HelpMenu", None, _("Help")),
-                ("HelpAbout", None, _("About"), None , _("About Kazam"),
-                              self.cb_help_about)
-            ])
+            ("FileMenu", None, _("File")),
+            ("FileQuit", Gtk.STOCK_QUIT, _("Quit"), None, _("Quit Kazam"),
+             self.cb_file_quit),
+            ("FilePreferences", Gtk.STOCK_PREFERENCES, _("Preferences"), None, _("Open preferences"),
+             self.cb_file_preferences),
+            ("HelpMenu", None, _("Help")),
+            ("HelpAbout", None, _("About"), None, _("About Kazam"),
+             self.cb_help_about)
+        ])
 
         self.uimanager = Gtk.UIManager()
         self.uimanager.add_ui_from_string(MENUBAR)
         self.uimanager.insert_action_group(self.action_group)
         self.menubar = self.uimanager.get_widget("/MenuBar")
-
 
     def cb_file_quit(self, action):
         self.emit("file-quit")
@@ -82,6 +82,3 @@ class MainMenu(GObject.GObject):
 
     def cb_help_about(self, action):
         self.emit("help-about")
-
-
-

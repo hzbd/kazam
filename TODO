@@ -3,12 +3,7 @@ TODO
 
 Whishlist (by BigWhale) and reasons why is something still on a whishlist
 
-- Frame marking the capture area while recording is in progress
-  A transparent window with no input mask is required on screen. However,
-  for that to work, Gdk.cairo_region_create_from_surface() is required. For
-  some reason, this fuction still isn't introspected. See:
-
-  http://askubuntu.com/questions/97789/creating-a-gtk-window-with-input-shape-mask-in-python
-
-  (This is still an issue ... :'( )
-
+ - Memory consuption issues with VP8 (needs checking)
+ - Detection of avenc_aac and x264enc, if one of them is missing, disable
+   broadcast mode.
+ 

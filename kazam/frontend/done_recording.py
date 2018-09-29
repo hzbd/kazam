@@ -32,18 +32,19 @@ from kazam.backend.prefs import *
 from kazam.frontend.combobox import EditComboBox
 from kazam.frontend.save_dialog import SaveDialog
 
+
 class DoneRecording(Gtk.Window):
 
     __gsignals__ = {
-    "save-done"       : (GObject.SIGNAL_RUN_LAST,
-                            None,
-                            [GObject.TYPE_PYOBJECT],),
-    "edit-request"  : (GObject.SIGNAL_RUN_LAST,
-                            None,
-                            [GObject.TYPE_PYOBJECT],),
-    "save-cancel"     : (GObject.SIGNAL_RUN_LAST,
-                            None,
-                            (),)
+        "save-done": (GObject.SIGNAL_RUN_LAST,
+                      None,
+                      [GObject.TYPE_PYOBJECT],),
+        "edit-request": (GObject.SIGNAL_RUN_LAST,
+                         None,
+                         [GObject.TYPE_PYOBJECT],),
+        "save-cancel": (GObject.SIGNAL_RUN_LAST,
+                        None,
+                        (),)
     }
 
     def __init__(self, icons, tempfile, codec, old_path):
@@ -80,17 +81,17 @@ class DoneRecording(Gtk.Window):
 
         self.radiobutton_save.connect("toggled", self.cb_radiobutton_save_toggled)
         self.radiobutton_edit.connect("toggled", self.cb_radiobutton_edit_toggled)
-        self.btn_cancel = Gtk.Button(label = _("Cancel"))
+        self.btn_cancel = Gtk.Button(label=_("Cancel"))
         self.btn_cancel.set_size_request(100, -1)
-        self.btn_continue = Gtk.Button(label = _("Continue"))
+        self.btn_continue = Gtk.Button(label=_("Continue"))
         self.btn_continue.set_size_request(100, -1)
 
         self.btn_continue.connect("clicked", self.cb_continue_clicked)
         self.btn_cancel.connect("clicked", self.cb_cancel_clicked)
 
-        self.hbox = Gtk.Box(spacing = 10)
+        self.hbox = Gtk.Box(spacing=10)
         self.left_hbox = Gtk.Box()
-        self.right_hbox = Gtk.Box(spacing = 5)
+        self.right_hbox = Gtk.Box(spacing=5)
 
         self.right_hbox.pack_start(self.btn_cancel, False, True, 0)
         self.right_hbox.pack_start(self.btn_continue, False, True, 0)
@@ -108,18 +109,17 @@ class DoneRecording(Gtk.Window):
         self.show_all()
         self.present()
 
-
     def cb_continue_clicked(self, widget):
         if self.action == ACTION_EDIT:
             logger.debug("Continue - Edit.")
-            (command, args)  = self.combobox_editor.get_active_value()
+            (command, args) = self.combobox_editor.get_active_value()
             self.emit("edit-request", (command, args))
             self.destroy()
         else:
             self.set_sensitive(False)
             logger.debug("Continue - Save ({0}).".format(self.codec))
             (dialog, result, self.old_path) = SaveDialog(_("Save screencast"),
-                                          self.old_path, self.codec)
+                                                         self.old_path, self.codec)
 
             if result == Gtk.ResponseType.OK:
                 uri = os.path.join(dialog.get_current_folder(), dialog.get_filename())
@@ -127,14 +127,15 @@ class DoneRecording(Gtk.Window):
                 if not uri.endswith(CODEC_LIST[self.codec][3]):
                     uri += CODEC_LIST[self.codec][3]
 
+                logger.debug("Moving from {} to {}".format(self.tempfile, uri))
                 shutil.move(self.tempfile, uri)
                 dialog.destroy()
                 self.emit("save-done", self.old_path)
                 self.destroy()
             else:
+                logger.debug("Save cancelled.")
                 self.set_sensitive(True)
                 dialog.destroy()
-
 
     def cb_cancel_clicked(self, widget):
         self.emit("save-cancel")
@@ -157,4 +158,3 @@ class DoneRecording(Gtk.Window):
         else:
             self.action = ACTION_EDIT
             self.combobox_editor.set_sensitive(True)
-

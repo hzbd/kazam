@@ -20,7 +20,6 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-import time
 import cairo
 import logging
 logger = logging.getLogger("Window Select")
@@ -31,17 +30,18 @@ from gi.repository import Gtk, GObject, Gdk, Wnck, GdkX11
 
 from kazam.backend.prefs import *
 
+
 class SelectWindow(GObject.GObject):
 
     __gsignals__ = {
-        "window-selected" : (GObject.SIGNAL_RUN_LAST,
-                             None,
-                               (),
-                                ),
-        "window-canceled" : (GObject.SIGNAL_RUN_LAST,
-                             None,
-                               (),
-                                ),
+        "window-selected": (GObject.SIGNAL_RUN_LAST,
+                            None,
+                            (),
+                            ),
+        "window-canceled": (GObject.SIGNAL_RUN_LAST,
+                            None,
+                            (),
+                            ),
     }
 
     def __init__(self):
@@ -130,14 +130,13 @@ class SelectWindow(GObject.GObject):
 
     def cb_keypress_event(self, widget, event):
         (op, keycode) = event.get_keycode()
-        if keycode == 36 or keycode == 104 or keycode == 9: # Enter or Escape
+        if keycode == 36 or keycode == 104 or keycode == 9:  # Enter or Escape
             self.gdk_win.set_cursor(self.last_cursor)
             self.window.hide()
             self.emit("window-canceled")
 
     def cb_draw(self, widget, cr):
         (w, h) = self.window.get_size()
-
 
         if self.compositing:
             cr.set_source_rgba(0.0, 0.0, 0.0, 0.45)
@@ -163,8 +162,8 @@ class SelectWindow(GObject.GObject):
             pass
         te = cr.text_extents(text)
         cr.set_line_width(2.0)
-        cx = w/2 - te[2]/2
-        cy = h/2 - te[3]/2
+        cx = w / 2 - te[2] / 2
+        cy = h / 2 - te[3] / 2
         if self.compositing:
             cr.set_source_rgba(0.4, 0.4, 0.4, 1.0)
         else:

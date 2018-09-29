@@ -31,7 +31,9 @@ from dbus.mainloop.glib import DBusGMainLoop
 
 from gi.repository import Gtk
 
+
 class KazamService(dbus.service.Object):
+
     def __init__(self, app):
         self.app = app
         bus_name = dbus.service.BusName('org.kazam', bus=dbus.SessionBus())
@@ -42,14 +44,13 @@ class KazamService(dbus.service.Object):
         self.app.window.show()
         self.app.window.present()
 
-
     @dbus.service.method('org.kazam')
     def prefs(self):
         self.app.cb_preferences_request(None)
 
 if __name__ == "__main__":
 
-    logger =  logging.getLogger()
+    logger = logging.getLogger()
     logger.name = "Kazam"
     handler = logging.StreamHandler()
     formatter = logging.Formatter('%(levelname)s %(name)s - %(message)s')
@@ -80,21 +81,21 @@ if __name__ == "__main__":
 
     from kazam.version import *
     version = "%(prog)s {0} '{1}'".format(VERSION, CODENAME)
-    parser = ArgumentParser(description = "Kazam - Screen recording and capturing program.")
+    parser = ArgumentParser(description="Kazam - Screen recording and capturing program.")
 
-    parser.add_argument("--debug",              action = "store_true",  help = "enable debug mode")
-    parser.add_argument("--silent",             action = "store_true",  help = "silent start, no UI shown")
-    parser.add_argument("--nosound",            action = "store_false", help = "disable PulseAudio")
-    parser.add_argument("--test",               action = "store_true",  help = "generate test video signal")
-    parser.add_argument("-v", "--version",      action = "version",     version = version)
-    parser.add_argument("-f", "--fullscreen",   action = "store_true",  help = "instant screenshot of a full screen")
-    parser.add_argument("-a", "--area",         action = "store_true",  help = "instant screenshot of a preselected screen area")
-    parser.add_argument("-s", "--select",       action = "store_true",  help = "instant screenshot of a preselected window")
-    parser.add_argument("-w", "--window",       action = "store_true",  help = "instant screenshot of an active window")
-    parser.add_argument("-p", "--preferences",  action = "store_true",  help = "show preferences window")
-    parser.add_argument("-g", "--godmode",      action = "store_true",  help = "god mode of capture")
-    parser.add_argument("-x", "--instance",     action = "store_true",  help = "spawn new instance")
-
+    parser.add_argument("--debug",              action="store_true",  help="enable debug mode")
+    parser.add_argument("--silent",             action="store_true",  help="silent start, no UI shown")
+    parser.add_argument("--nosound",            action="store_false", help="disable PulseAudio")
+    parser.add_argument("--test",               action="store_true",  help="generate test video signal")
+    parser.add_argument("-v", "--version",      action="version",     version=version)
+    parser.add_argument("-f", "--fullscreen",   action="store_true",  help="instant screenshot of a full screen")
+    parser.add_argument("-a", "--area",         action="store_true",
+                        help="instant screenshot of a preselected screen area")
+    parser.add_argument("-s", "--select",       action="store_true",  help="instant screenshot of a preselected window")
+    parser.add_argument("-w", "--window",       action="store_true",  help="instant screenshot of an active window")
+    parser.add_argument("-p", "--preferences",  action="store_true",  help="show preferences window")
+    parser.add_argument("-g", "--godmode",      action="store_true",  help="god mode of capture")
+    parser.add_argument("-x", "--instance",     action="store_true",  help="spawn new instance")
 
     args = parser.parse_args()
     if args.debug:
@@ -108,19 +109,19 @@ if __name__ == "__main__":
 
     if args.fullscreen:
         from kazam.instant import InstantApp
-        app = InstantApp(datadir, dist, args.debug, 1) # MODE_ALL
+        app = InstantApp(datadir, dist, args.debug, 1)  # MODE_ALL
     elif args.area:
         from kazam.instant import InstantApp
-        app = InstantApp(datadir, dist, args.debug, 2) # MODE_AREA
+        app = InstantApp(datadir, dist, args.debug, 2)  # MODE_AREA
     elif args.select:
         from kazam.instant import InstantApp
-        app = InstantApp(datadir, dist, args.debug, 3) # MODE_WIN
+        app = InstantApp(datadir, dist, args.debug, 3)  # MODE_WIN
     elif args.window:
         from kazam.instant import InstantApp
-        app = InstantApp(datadir, dist, args.debug, 4) # MODE_ACTIVE
+        app = InstantApp(datadir, dist, args.debug, 4)  # MODE_ACTIVE
     elif args.godmode:
         from kazam.instant import InstantApp
-        app = InstantApp(datadir, dist, args.debug, 666) # MODE_ACTIVE
+        app = InstantApp(datadir, dist, args.debug, 666)  # MODE_ACTIVE
     else:
 
         DBusGMainLoop(set_as_default=True)
