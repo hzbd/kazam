@@ -68,7 +68,6 @@ class OutlineWindow(GObject.GObject):
             logger.warning("Compositing window manager not found, expect the unexpected.")
             self.compositing = False
 
-
         #
         # Hardcore Launcher and Panel size detection
         #
@@ -89,11 +88,14 @@ class OutlineWindow(GObject.GObject):
         except:
             logger.warning("Unable to detect correct launcher and panel sizes. Using fallback.")
 
+        logger.debug("Got panel size and launcher.")
         self.window.move(self.x, self.y)
         self.window.set_default_geometry(self.w, self.h)
         (x, y) = self.window.get_position()
         (w, h) = self.window.get_size()
+        logger.debug("Showing outline window.")
         self.window.show_all()
+        logger.debug("Outline window shown.")
 
     def show(self):
         self.window.show_all()
@@ -112,8 +114,13 @@ class OutlineWindow(GObject.GObject):
         surface_ctx.set_source_rgba(1.0, 1.0, 1.0, 0.0)
         surface_ctx.set_operator(cairo.OPERATOR_SOURCE)
         surface_ctx.paint()
-        reg = Gdk.cairo_region_create_from_surface(surface)
-        widget.input_shape_combine_region(reg)
+
+        rect = cairo.RectangleInt(0, 0, 1, 1)
+        reg = cairo.Region(rect)
+        if (not reg.is_empty()):
+            widget.input_shape_combine_region(None)
+            widget.input_shape_combine_region(reg)
+
         cr.move_to(0, 0)
         cr.set_source_rgba(1.0, 0.0, 0.0, 0.8)
         cr.set_line_width(2.0)
@@ -140,4 +147,3 @@ class OutlineWindow(GObject.GObject):
 
         cr.stroke()
         cr.set_operator(cairo.OPERATOR_OVER)
-

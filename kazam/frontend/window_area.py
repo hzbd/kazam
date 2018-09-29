@@ -19,7 +19,6 @@
 #       Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #       MA 02110-1301, USA.
 
-import time
 import cairo
 import math
 import logging
@@ -36,14 +35,14 @@ from kazam.utils import in_circle
 class AreaWindow(GObject.GObject):
 
     __gsignals__ = {
-        "area-selected" : (GObject.SIGNAL_RUN_LAST,
-                             None,
-                               (),
-                                ),
-        "area-canceled" : (GObject.SIGNAL_RUN_LAST,
-                             None,
-                               (),
-                                ),
+        "area-selected": (GObject.SIGNAL_RUN_LAST,
+                          None,
+                          (),
+                          ),
+        "area-canceled": (GObject.SIGNAL_RUN_LAST,
+                          None,
+                          (),
+                          ),
     }
 
     def __init__(self):
@@ -82,7 +81,9 @@ class AreaWindow(GObject.GObject):
         self.drawing.connect("button-press-event", self.cb_draw_button_press_event)
         self.drawing.connect("button-release-event", self.cb_draw_button_release_event)
         self.drawing.connect("leave-notify-event", self.cb_leave_notify_event)
-        self.drawing.add_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.POINTER_MOTION_HINT_MASK | Gdk.EventMask.LEAVE_NOTIFY_MASK)
+        self.drawing.add_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK |
+                                Gdk.EventMask.POINTER_MOTION_MASK | Gdk.EventMask.POINTER_MOTION_HINT_MASK |
+                                Gdk.EventMask.LEAVE_NOTIFY_MASK)
 
         self.window.set_border_width(0)
         self.window.set_app_paintable(True)
@@ -239,7 +240,7 @@ class AreaWindow(GObject.GObject):
                 self.g_endy = sy + ey
 
             # Width and height should always be updated
-            self.width  = self.endx - self.startx
+            self.width = self.endx - self.startx
             self.height = self.endy - self.starty
 
         widget.queue_draw()
@@ -287,7 +288,7 @@ class AreaWindow(GObject.GObject):
         self.endy = 0
         self.g_endx = 0
         self.g_endy = 0
-        self.width  = 0
+        self.width = 0
         self.height = 0
 
     def cb_draw_button_release_event(self, widget, event):
@@ -338,7 +339,7 @@ class AreaWindow(GObject.GObject):
         else:
             cr.set_source_rgb(0.0, 0.0, 0.0)
 
-        cr.rectangle(self.startx+1, self.starty+1, self.width-2, self.height-2)
+        cr.rectangle(self.startx + 1, self.starty + 1, self.width - 2, self.height - 2)
         cr.fill()
 
         cr.set_operator(cairo.OPERATOR_OVER)
@@ -361,28 +362,28 @@ class AreaWindow(GObject.GObject):
             grad.add_color_stop_rgba(0.75, 0.0, 0.0, 0.0, 0.25)
             grad.add_color_stop_rgba(1.0, 0.0, 0.0, 0.0, 0.0)
 
-            cr.arc(centerx, centery, 10, 0, 2*math.pi)
+            cr.arc(centerx, centery, 10, 0, 2 * math.pi)
             cr.set_source(grad)
             cr.fill()
 
             # Handle background
-            grad = cairo.LinearGradient(centerx, centery-8, centerx, centery+8)
+            grad = cairo.LinearGradient(centerx, centery - 8, centerx, centery + 8)
             grad.add_color_stop_rgb(0.0, 0.75, 0.75, 0.75)
             grad.add_color_stop_rgb(0.75, 0.95, 0.95, 0.95)
 
-            cr.arc(centerx, centery, 8, 0, 2*math.pi)
+            cr.arc(centerx, centery, 8, 0, 2 * math.pi)
             cr.set_source(grad)
             cr.fill()
 
             # White outline
             cr.set_source_rgb(1.0, 1.0, 1.0)
-            cr.arc(centerx, centery, 8, 0, 2*math.pi)
+            cr.arc(centerx, centery, 8, 0, 2 * math.pi)
             cr.stroke()
 
         self._outline_text(cr, w, h, 30, _("Select an area by clicking and dragging."))
         self._outline_text(cr, w, h + 50, 26, _("Press ENTER to confirm or ESC to cancel"))
 
-        self._outline_text(cr, w, h + 100, 20, "({0} × {1})".format(abs(self.width+1), abs(self.height+1)))
+        self._outline_text(cr, w, h + 100, 20, "({0} × {1})".format(abs(self.width + 1), abs(self.height + 1)))
         cr.set_operator(cairo.OPERATOR_SOURCE)
 
     def _outline_text(self, cr, w, h, size, text):
@@ -393,8 +394,8 @@ class AreaWindow(GObject.GObject):
             pass
         te = cr.text_extents(text)
         cr.set_line_width(2.0)
-        cx = w/2 - te[2]/2
-        cy = h/2 - te[3]/2
+        cx = w / 2 - te[2] / 2
+        cy = h / 2 - te[3] / 2
         if self.compositing:
             cr.set_source_rgba(0.4, 0.4, 0.4, 1.0)
         else:
@@ -409,7 +410,6 @@ class AreaWindow(GObject.GObject):
             cr.set_source_rgb(1.0, 1.0, 1.0)
         cr.move_to(cx, cy)
         cr.show_text(text)
-
 
     def accept_area(self):
         self.gdk_win.set_cursor(self.last_cursor)
@@ -432,6 +432,6 @@ class AreaWindow(GObject.GObject):
         if self.starty < 0:
             self.starty = 0
 
-        self.width  = abs(self.endx - self.startx)
+        self.width = abs(self.endx - self.startx)
         self.height = abs(self.endy - self.starty)
         logger.debug("Selected coords: {0} {1} {2} {3}".format(self.g_startx, self.g_starty, self.g_endx, self.g_endy))

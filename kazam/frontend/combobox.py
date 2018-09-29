@@ -30,24 +30,24 @@ from kazam.backend.prefs import *
 
 class EditComboBox(Gtk.ComboBox):
 
-    KDENLIVE_VERSION = [0,8]
+    KDENLIVE_VERSION = [0, 8]
 
     #
     # This really needs to be done differently ...
     #
     if prefs.dist[2] == 'quantal' or prefs.dist[2] == 'raring':
         EDITORS = {
-                    "/usr/share/app-install/desktop/openshot:openshot.desktop":[],
-                    "/usr/share/app-install/desktop/pitivi:pitivi.desktop": ["-i", "-a"],
-                    "/usr/share/app-install/desktop/avidemux:avidemux-gtk.desktop": [],
-                    "/usr/share/app-install/desktop/kdenlive:kde4__kdenlive.desktop": ["-i"],
+            "/usr/share/app-install/desktop/openshot:openshot.desktop": [],
+            "/usr/share/app-install/desktop/pitivi:pitivi.desktop": ["-i", "-a"],
+            "/usr/share/app-install/desktop/avidemux:avidemux-gtk.desktop": [],
+            "/usr/share/app-install/desktop/kdenlive:kde4__kdenlive.desktop": ["-i"],
         }
     else:
         EDITORS = {
-                    "/usr/share/applications/openshot.desktop": [],
-                    "/usr/share/applications/pitivi.desktop": ["-i", "-a"],
-                    "/usr/share/applications/avidemux-gtk.desktop": [],
-                    "/usr/share/applications/kde4/kdenlive.desktop": ["-i"],
+            "/usr/share/applications/openshot.desktop": [],
+            "/usr/share/applications/pitivi.desktop": ["-i", "-a"],
+            "/usr/share/applications/avidemux-gtk.desktop": [],
+            "/usr/share/applications/kde4/kdenlive.desktop": ["-i"],
         }
 
     def __init__(self, icons):
@@ -64,7 +64,7 @@ class EditComboBox(Gtk.ComboBox):
         self.box_model = Gtk.ListStore(GdkPixbuf.Pixbuf, str,
                                        GObject.TYPE_PYOBJECT,
                                        GObject.TYPE_PYOBJECT
-                                      )
+                                       )
         self.set_model(self.box_model)
         self._populate()
         self.set_active(0)
