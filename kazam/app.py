@@ -824,8 +824,11 @@ class KazamApp(GObject.GObject):
     def setup_translations(self):
         gettext.bindtextdomain("kazam", "/usr/share/locale")
         gettext.textdomain("kazam")
+        locale.bindtextdomain("kazam", "/usr/share/locale")
+        locale.textdomain("kazam")
+        currentLocale = locale.getlocale()
         try:
-            locale.setlocale(locale.LC_ALL, "")
+            locale.setlocale(locale.LC_ALL, currentLocale)
         except Exception as e:
             logger.exception("EXCEPTION: Setlocale failed, no language support.")
 
