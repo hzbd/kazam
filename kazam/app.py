@@ -116,8 +116,12 @@ class KazamApp(GObject.GObject):
         self.last_mode = None
 
         if prefs.sound:
-            prefs.pa_q = pulseaudio_q()
-            prefs.pa_q.start()
+            try:
+                prefs.pa_q = pulseaudio_q()
+                prefs.pa_q.start()
+            except:
+                logger.warning("Pulse Audio Failed to load. Sound recording disabled.")
+                prefs.sound = False
 
         self.mainmenu = MainMenu()
 
