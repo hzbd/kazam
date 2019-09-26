@@ -27,6 +27,7 @@ from xdg.BaseDirectory import xdg_config_home
 
 class KazamConfig(ConfigParser):
 
+    default_section = "DEFAULT"
     DEFAULTS = [{
                 "name": "main",
                 "keys": {"video_toggled":        "True",
@@ -130,5 +131,3 @@ class KazamConfig(ConfigParser):
         file_ = open(self.CONFIGFILE, "w")
         ConfigParser.write(self, file_)
         file_.close()
-
-
