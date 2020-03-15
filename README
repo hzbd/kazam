@@ -41,7 +41,7 @@ $ sudo apt-get install kazam
 For distribution independent installation you will have to get the latest
 tarball release from Launchpad:
 
-http://launchpad.net/kazam/stable/1.4.4/+download/kazam_1.4.4.tar.gz
+https://launchpad.net/kazam/stable/1.4.4/+download/kazam-1.4.4.tar.gz
 
 Unpack it and then run setup:
 
