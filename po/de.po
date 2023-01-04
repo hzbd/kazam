@@ -82,7 +82,7 @@ msgstr "Countdown:"
 
 #: ../data/ui/preferences.ui.h:6
 msgid "Toggle display of countdown splash"
-msgstr "Zeige Countdown Ladebildschrim"
+msgstr "Zeige Countdown Ladebildschirm"
 
 #: ../data/ui/preferences.ui.h:7
 msgid "General"
@@ -191,7 +191,7 @@ msgstr "Fenster"
 
 #: ../kazam/app.py:225
 msgid "Capture contents of a single window."
-msgstr "Erstellt eine Bildschirmaufnahme eines fensters"
+msgstr "Erstellt eine Bildschirmaufnahme eines Fensters"
 
 #: ../kazam/app.py:236
 msgid "Area"
@@ -260,7 +260,7 @@ msgstr "Bildschirmvideo speichern"
 #: ../kazam/frontend/about_dialog.py:58
 msgid "Record a video of activity on your screen or capture a screenshot."
 msgstr ""
-"Nimmt ein Video des Bildschirms auf oder macht einen einzelnes "
+"Nimmt ein Video des Bildschirms auf oder macht ein einzelnes "
 "Bildschirmfoto."
 
 #: ../kazam/frontend/save_dialog.py:38
@@ -298,7 +298,7 @@ msgstr "Über Kazam"
 #: ../kazam/frontend/window_area.py:209
 msgid "Select an area by clicking and dragging."
 msgstr ""
-"Einen Bereich festlegen indem man einen Links klick macht und den Mauszeiger "
+"Einen Bereich festlegen indem man einen Linksklick macht und den Mauszeiger "
 "zieht"
 
 #: ../kazam/frontend/window_area.py:210
@@ -311,7 +311,7 @@ msgstr "Aufnahme pausieren"
 
 #: ../kazam/backend/grabber.py:171
 msgid "Save capture"
-msgstr "Speichere Aufnamhe"
+msgstr "Speichere Aufnahme"
 
 #: ../kazam/backend/prefs.py:137
 msgid "Unknown"
