@@ -38,6 +38,13 @@ $ sudo add-apt-repository ppa:kazam-team/stable-series
 $ sudo apt-get update
 $ sudo apt-get install kazam
 
+If you have problems on Ubuntu 23 with stopping the recording (menu is grey and not selectable, and keyboard shortcut not working), install the following packages:
+```
+$ sudo apt install python3-xlib python-gi-dev python3-cairo-dev
+```
+Keyboard shortcuts should work after this:
+finish recording = "Windows logo" + "Control" + "f"
+
 For distribution independent installation you will have to get the latest
 tarball release from Launchpad:
 
